@@ -1,0 +1,20 @@
+version: "3.1"
+
+services:
+  db:
+    image: cynide/custom-db-musicbrainz
+    networks: 
+      - musicbrainz
+  server:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    volumes:
+      - "/home/cynide/Projects/temp:/musicbrainz-server"
+    networks:
+      - musicbrainz
+    ports:
+      - "5000:5000"
+
+networks: 
+  musicbrainz:
