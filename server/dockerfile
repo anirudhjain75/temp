@@ -9,22 +9,8 @@ RUN apt-get update && apt-get install -y postgresql-9.5 postgresql-server-dev-9.
   build-essential \
   libxml2-dev libpq-dev libexpat1-dev libdb-dev libicu-dev liblocal-lib-perl cpanminus
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - 
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt-get update && apt-get install -y yarn
-
-
 RUN git clone https://github.com/anirudhjain75/musicbrainz-server
 WORKDIR /musicbrainz-server
 COPY DBDefs.pm ./lib/DBDefs.pm
 
 RUN echo 'eval $( perl -Mlocal::lib )' >> ~/.bashrc
-RUN /bin/bash -c "source ~/.bashrc"
-RUN cpanm --installdeps --notest .
-RUN ./script/compile_resources.sh
-
-CMD /bin/bash

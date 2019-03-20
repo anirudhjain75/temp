@@ -25,8 +25,8 @@ use warnings;
 #   $Id$
 #____________________________________________________________________________
 
-package musicbrainz-server-docker_db_1Defs;
-use parent 'musicbrainz-server-docker_db_1Defs::Default';
+package dbDefs;
+use parent 'dbDefs::Default';
 use MusicBrainz::Server::Replication ':replication_type';
 use MusicBrainz::Server::DatabaseConnectionFactory;
 
@@ -54,7 +54,7 @@ MusicBrainz::Server::DatabaseConnectionFactory->register_databases(
         database    => "musicbrainz_db",
         username    => "musicbrainz",
         password        => "musicbrainz",
-        host            => "musicbrainz-server-docker_db_1",
+        host            => "db",
         port            => "5432",
     },
     # How to connect to a test database
@@ -62,7 +62,7 @@ MusicBrainz::Server::DatabaseConnectionFactory->register_databases(
         database    => "musicbrainz_test",
         username    => "musicbrainz",
         password        => "musicbrainz",
-        host            => "musicbrainz-server-docker_db_1",
+        host            => "db",
         port            => "5432",
     },
     # How to connect to a Selenium test database. This database is created
@@ -72,7 +72,7 @@ MusicBrainz::Server::DatabaseConnectionFactory->register_databases(
         database    => 'musicbrainz_selenium',
         schema      => 'musicbrainz',
         username    => 'musicbrainz',
-        host        => "musicbrainz-server-docker_db_1",
+        host        => "db",
         port        => "5432",
     },
     # How to connect for read-only access.  See "REPLICATION_TYPE" (below)
@@ -80,7 +80,7 @@ MusicBrainz::Server::DatabaseConnectionFactory->register_databases(
         database    => "musicbrainz_db",
         username    => "musicbrainz",
         password        => "musicbrainz",
-        host            => "musicbrainz-server-docker_db_1",
+        host            => "db",
         port            => "5432",
     },
     # How to connect for administrative access
@@ -88,7 +88,7 @@ MusicBrainz::Server::DatabaseConnectionFactory->register_databases(
         database    => "template1",
         username    => "postgres",
         password        => "musicbrainz",
-        host            => "musicbrainz-server-docker_db_1",
+        host            => "db",
         port            => "5432",
     },
     # How to connect when running maintenance scripts located under admin/.
