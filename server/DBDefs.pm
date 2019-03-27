@@ -25,8 +25,8 @@ use warnings;
 #   $Id$
 #____________________________________________________________________________
 
-package dbDefs;
-use parent 'dbDefs::Default';
+package DBDefs;
+use parent 'DBDefs::Default';
 use MusicBrainz::Server::Replication ':replication_type';
 use MusicBrainz::Server::DatabaseConnectionFactory;
 
