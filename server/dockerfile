@@ -7,10 +7,5 @@ RUN apt-get update && apt-get install -y postgresql-9.5 postgresql-server-dev-9.
   curl \
   apt-transport-https \
   build-essential \
-  libxml2-dev libpq-dev libexpat1-dev libdb-dev libicu-dev liblocal-lib-perl cpanminus
-
-RUN git clone https://github.com/metabrainz/musicbrainz-server
-
-WORKDIR /musicbrainz-server
-COPY DBDefs.pm ./lib/DBDefs.pm
-
+  libxml2-dev libpq-dev libexpat1-dev libdb-dev libicu-dev liblocal-lib-perl cpanminus \
+  npm

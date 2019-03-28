@@ -5,6 +5,7 @@ services:
     image: cynide/custom-db-musicbrainz
     networks: 
       - musicbrainz
+      
   server:
     build:
       context: ./server
