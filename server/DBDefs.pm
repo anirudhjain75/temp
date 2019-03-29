@@ -243,35 +243,35 @@ sub WEB_SERVER                { "localhost:5000" }
 # PLUGIN_CACHE_OPTIONS are the options configured for Plugin::Cache.  $c->cache
 # is provided by Plugin::Cache, and is required for HTTP Digest authentication
 # in the webservice (Catalyst::Authentication::Credential::HTTP).
-# sub PLUGIN_CACHE_OPTIONS {
-#     my $self = shift;
-#     return {
-#         class => 'MusicBrainz::Server::CacheWrapper::Redis',
-#         server => '127.0.0.1:6379',
-#         namespace => $self->CACHE_NAMESPACE . 'Catalyst:',
-#     };
-# }
+sub PLUGIN_CACHE_OPTIONS {
+    my $self = shift;
+    return {
+        class => 'MusicBrainz::Server::CacheWrapper::Redis',
+        server => 'redis:6379',
+        namespace => $self->CACHE_NAMESPACE . 'Catalyst:',
+    };
+}
 
 # The caching options here relate to object caching in Redis - such as for
 # artists, releases, etc. in order to speed up queries. See below if you want
 # to disable caching.
-# sub CACHE_MANAGER_OPTIONS {
-#     my $self = shift;
-#     my %CACHE_MANAGER_OPTIONS = (
-#         profiles => {
-#             external => {
-#                 class => 'MusicBrainz::Server::CacheWrapper::Redis',
-#                 options => {
-#                     server => '127.0.0.1:6379',
-#                     namespace => $self->CACHE_NAMESPACE,
-#                 },
-#             },
-#         },
-#         default_profile => 'external',
-#     );
-#
-#     return \%CACHE_MANAGER_OPTIONS
-# }
+sub CACHE_MANAGER_OPTIONS {
+    my $self = shift;
+    my %CACHE_MANAGER_OPTIONS = (
+        profiles => {
+            external => {
+                class => 'MusicBrainz::Server::CacheWrapper::Redis',
+                options => {
+                    server => 'redis:6379',
+                    namespace => $self->CACHE_NAMESPACE,
+                },
+            },
+        },
+        default_profile => 'external',
+    );
+
+    return \%CACHE_MANAGER_OPTIONS
+}
 
 # Sets the TTL for entities stored in Redis, in seconds. A value of 0
 # indicates that no expiration is set.
@@ -296,15 +296,15 @@ sub WEB_SERVER                { "localhost:5000" }
 # sure it doesn't point at any production data you may have in your
 # redis server.
 
-# sub DATASTORE_REDIS_ARGS {
-#     my $self = shift;
-#     return {
-#         database => 0,
-#         namespace => $self->CACHE_NAMESPACE,
-#         server => '127.0.0.1:6379',
-#         test_database => 1,
-#     };
-# }
+sub DATASTORE_REDIS_ARGS {
+    my $self = shift;
+    return {
+        database => 0,
+        namespace => $self->CACHE_NAMESPACE,
+        server => 'redis:6379',
+        test_database => 1,
+    };
+}
 
 ################################################################################
 # Session cookies

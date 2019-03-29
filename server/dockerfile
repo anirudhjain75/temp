@@ -5,7 +5,22 @@ RUN apt-get update && apt-get install -y postgresql-9.5 postgresql-server-dev-9.
   redis-server \
   wget \
   curl \
+  python \
   apt-transport-https \
   build-essential \
   libxml2-dev libpq-dev libexpat1-dev libdb-dev libicu-dev liblocal-lib-perl cpanminus \
-  npm
+  openssl libssl-dev
+
+RUN git clone https://github.com/nodejs/node.git
+WORKDIR /node
+RUN git fetch && git fetch --tags && git checkout v10.15.3 && ./configure && make && make install
+WORKDIR /
+RUN npm install -g yarn
+RUN git clone https://github.com/metabrainz/musicbrainz-server
+WORKDIR /musicbrainz-server
+COPY DBDefs.pm ./lib/DBDefs.pm
+RUN echo 'eval $( perl -Mlocal::lib )' >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
+RUN /bin/bash -c "cpanm --installdeps --notest . && ./script/compile_resources.sh"
+RUN /bin/bash -c "redis-server --daemonize yes"
+CMD /bin/bash -c "plackup -Ilib -r"
